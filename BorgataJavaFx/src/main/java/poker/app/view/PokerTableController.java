@@ -97,6 +97,8 @@ public class PokerTableController {
 	public HBox hBoxP3Cards;
 	@FXML
 	public HBox hBoxP4Cards;
+	@FXML
+	public HBox hboxWinner;
 
 	@FXML
 	public TextField txtP1Name;
@@ -432,10 +434,40 @@ public class PokerTableController {
 			System.out.println("Winning Player Position: " + WinningPlayer.getiPlayerPosition());
 
 			// label for winner
-			lblWinner.setText("Winning Player Position: " + Integer.toString(WinningPlayer.getiPlayerPosition()));
-
+			//lblWinner.setText("Winning Player Position: " + Integer.toString(WinningPlayer.getiPlayerPosition()));
+			
+			//lblWinner.setVisible(true);
+			
+			
+			if (4 == WinningPlayer.getiPlayerPosition() ){
+				hboxWinner = hBoxP4Cards;
+		        lblWinner.setText("Winning Player : " + lblP4Name.getText());
+				lblWinner.setVisible(true);
+				}
+		else { if (3 == WinningPlayer.getiPlayerPosition() ){
+			hboxWinner = hBoxP3Cards ;
+			lblWinner.setText("Winning Player : " + lblP3Name.getText());
 			lblWinner.setVisible(true);
+			}
+		else { if (2 == WinningPlayer.getiPlayerPosition() ){
+			hboxWinner = hBoxP2Cards ;
+			lblWinner.setText("Winning Player : " + lblP2Name.getText());
+			lblWinner.setVisible(true);
+			}
+		else { if (1 == WinningPlayer.getiPlayerPosition() ){
+			hboxWinner = hBoxP1Cards ;
+			lblWinner.setText("Winning Player : " + lblP1Name.getText());
+			lblWinner.setVisible(true);
+			}}}}
+		
+			
 			SetGameControls(eGameState.EndOfGame);
+			
+			
+			
+			
+				
+			
 
 		} else {
 			if (iCardDrawnPlayer + iCardDrawnCommon + 2 >= gme.getRule().getTotalCardsToDraw()) {
@@ -462,12 +494,15 @@ public class PokerTableController {
 					System.out.println(AllHands.get(0).getHandStrength());
 				}
 			}
+			
+			
 
 			// Re-enable the draw button
 			SetGameControls(eGameState);
 		}
 
 	}
+	
 
 	private SequentialTransition CalculateTransition(Card c, HBox PlayerCardBox, ImageView imView, int iCardDrawn) {
 		// This is the card that is going to be dealt to the player.

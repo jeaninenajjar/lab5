@@ -42,6 +42,7 @@
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </opaqueInsets>
                   </HBox>
+                  <HBox fx:id="hboxWinner" layoutX="14.0" layoutY="26.0" prefHeight="67.0" prefWidth="297.0" />
                </children>
             </AnchorPane>
          </bottom>
