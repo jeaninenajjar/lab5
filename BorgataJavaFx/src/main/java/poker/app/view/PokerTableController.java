@@ -53,9 +53,10 @@ import pokerEnums.eGameState;
 
 public class PokerTableController {
 
+	public static int GamePlayed;
 	@FXML
 	private Button btnToggle;
-	
+
 	boolean bPlay = false;
 
 	boolean bP1Sit = false;
@@ -114,12 +115,8 @@ public class PokerTableController {
 	public Label lblP3Name;
 	@FXML
 	public Label lblP4Name;
-	@FXML 
+	@FXML
 	public Label lblWinner;
-	
-	
-	
-	
 
 	@FXML
 	public ToggleButton btnP1SitLeave;
@@ -151,7 +148,7 @@ public class PokerTableController {
 
 	/**
 	 * Is called by the main application to give a reference back to itself.
-	 * 
+	 *
 	 * @param mainApp
 	 */
 	public void setMainApp(MainApp mainApp) {
@@ -247,7 +244,7 @@ public class PokerTableController {
 		hBoxP2Cards.getChildren().clear();
 		hBoxP3Cards.getChildren().clear();
 		hBoxP4Cards.getChildren().clear();
-		//hide the winner label
+		// hide the winner label
 		lblWinner.setVisible(false);
 
 		// Face down card (will represent the deck)
@@ -261,6 +258,31 @@ public class PokerTableController {
 		// Get the Rule, start the Game
 		Rule rle = new Rule(eGame.Omaha);
 		gme = new GamePlay(rle);
+
+		switch (GamePlayed) {
+		default:
+			rle = new Rule(eGame.FiveStud);
+			gme = new GamePlay(rle);
+		case 1:
+			rle = new Rule(eGame.TexasHoldEm);
+			gme = new GamePlay(rle);
+		case 2:
+			rle = new Rule(eGame.FiveStud);
+			gme = new GamePlay(rle);
+		case 3:
+			rle = new Rule(eGame.FiveStudOneJoker);
+			gme = new GamePlay(rle);
+		case 4:
+			rle = new Rule(eGame.FiveStudTwoJoker);
+			gme = new GamePlay(rle);
+		case 5:
+			rle = new Rule(eGame.SevenDraw);
+			gme = new GamePlay(rle);
+		case 6:
+			rle = new Rule(eGame.Omaha);
+			gme = new GamePlay(rle);
+
+		}
 
 		// Add the seated players to the game, create a GPPH for the player
 		for (Player p : mainApp.GetSeatedPlayers()) {
@@ -408,14 +430,13 @@ public class PokerTableController {
 			Hand WinningHand = Hand.PickBestHand(BestPlayerHands);
 			Player WinningPlayer = (Player) hsPlayerHand.get(WinningHand);
 			System.out.println("Winning Player Position: " + WinningPlayer.getiPlayerPosition());
-			
-			//label for winner
+
+			// label for winner
 			lblWinner.setText("Winning Player Position: " + Integer.toString(WinningPlayer.getiPlayerPosition()));
 
 			lblWinner.setVisible(true);
 			SetGameControls(eGameState.EndOfGame);
-			
-			
+
 		} else {
 			if (iCardDrawnPlayer + iCardDrawnCommon + 2 >= gme.getRule().getTotalCardsToDraw()) {
 				for (Player p : mainApp.GetSeatedPlayers()) {
@@ -555,7 +576,7 @@ public class PokerTableController {
 
 	/**
 	 * randInt - Create a random number
-	 * 
+	 *
 	 * @param min
 	 * @param max
 	 * @return
@@ -566,10 +587,10 @@ public class PokerTableController {
 
 	}
 
-    @FXML
-    private void GetToggleGroup() {
+	@FXML
+	private void GetToggleGroup() {
 
-    	mainApp.getToggleGroup();
-    	
-    }
+		mainApp.getToggleGroup();
+
+	}
 }
